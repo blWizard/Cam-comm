@@ -13,11 +13,13 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (Serial1.available() >= 1) {
     input = Serial1.readStringUntil('\n');
-    final_data = input.toFloat();
+    // final_data = input.toFloat();
+    offset = input.toFloat();
     // char* decoded_data = (char*)input; 
     // int input = Serial1.readBytesUntil('\n');
     // String message = String(decoded_input);
-    Serial.print("Final data: ");
+    
+    Serial.print("Offset: ");
     Serial.println(final_data);
   }
   // else {
