@@ -1,5 +1,8 @@
 // Reciever of camera´s info.
 
+String input;
+float final_data;
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -8,12 +11,16 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if (Serial1.available() > 1) {
-    int input = Serial1.read();
-    Serial.println("Input: ");
-    Serial.println(input);
+  if (Serial1.available() >= 1) {
+    input = Serial1.readStringUntil('\n');
+    final_data = input.toFloat();
+    // char* decoded_data = (char*)input; 
+    // int input = Serial1.readBytesUntil('\n');
+    // String message = String(decoded_input);
+    Serial.print("Final data: ");
+    Serial.println(final_data);
   }
-  else {
-    Serial.println("No recibí info!");
-  }
+  // else {
+  //   // Serial.println("No recibí info!");
+  // }
 }
