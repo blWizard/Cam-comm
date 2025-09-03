@@ -100,18 +100,20 @@ time.sleep(1)
 while True:
     img = sensor.snapshot()
     court_blob = find_court(img, COURT_THRESH)
-    # if court_blob != -1:
-    #     ball_centre = find_ball(img, BALL_THRESH, court_blob)
-    #     if ball_centre != -1:
-    #         offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
-    #         # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
-    #         send_data(offset)
-    #         print("----------------------------------")
-    ball_centre = find_ball(img, BALL_THRESH, court_blob)
-    if ball_centre != -1:
-        offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
-        # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
-        ball_led.toggle()
-        send_data(offset) # Sends ball offset (centered, left disaligned, right disaligned)
-    else:
-        send_data(-1000) # Sends a value that means no ball detected
+    if court_blob != -1:
+        ball_centre = find_ball(img, BALL_THRESH, court_blob)
+        if ball_centre != -1:
+            offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
+            # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
+            send_data(offset)
+            # print("----------------------------------")
+        else:
+            send_data(-1000) # Sends a value that means no ball detected
+    # ball_centre = find_ball(img, BALL_THRESH, court_blob)
+    # if ball_centre != -1:
+    #     offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
+    #     # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
+    #     ball_led.toggle()
+    #     send_data(offset) # Sends ball offset (centered, left disaligned, right disaligned)
+    # else:
+    #     send_data(-1000) # Sends a value that means no ball detected
