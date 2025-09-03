@@ -9,8 +9,7 @@ const int centered_ball_speed = 50;
 const int no_ball_speed = 100;
 const int no_message_speed = 70;
 
-void equilibrate_ball() {
-  offset = receive_offset_data();
+void equilibrate_ball(float offset) {
   if (offset == -1000.00) { // If theres "no ball"
     move_left(no_ball_speed);
   }
@@ -23,7 +22,6 @@ void equilibrate_ball() {
   else if (offset == 0.00) {
     move_left(centered_ball_speed);
   }
-  offset = receive_offset_data();
 }
 
 float receive_offset_data() {
@@ -44,5 +42,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  equilibrate_ball();
+  offset, area = receive_offset_data();
+  equilibrate_ball(offset);
 }
