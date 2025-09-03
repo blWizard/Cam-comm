@@ -2,38 +2,37 @@
 
 String input;
 float final_data;
+float offset;
+
+const int centering_ball_speed = 150;
+const int centered_ball_speed = 50;
+const int no_ball_speed = 100;
+const int no_message_speed = 70;
 
 void equilibrate_ball() {
-  float offset = receive_offset_data();
-  // Serial.println("Recibí data!!");
-  while (offset != -1000.00) {
-    Serial.print("Offset dentro del while: ");
-    Serial.println(offset);
-    if (offset < 0) {
-      // Mover a la izquierda
-      Serial.println("Moviendome hacia izquierda!!!");
-      move_left(122);
-
-    }
-    else if (offset > 0) {
-      // Mover a la derecha
-      Serial.println("Moviendome hacia la derecha!!!");
-      move_right(122);
-
-    }
-    // else 9
-    offset = receive_offset_data();
+  offset = receive_offset_data();
+  if (offset == -1000.00) { // If theres "no ball"
+    move_left(no_ball_speed);
   }
-  Serial.println("No recibí datos");
+  else if (offset < 0.00 and offset != -10000.00) { // Double check condition so we do not confuse 'left' messages with 'I did not receive any data' (-10.000) info.
+    move_left(centering_ball_speed);
+  }
+  else if (offset > 0.00) {
+    move_right(centering_ball_speed);
+  }
+  else if (offset == 0.00) {
+    move_left(centered_ball_speed);
+  }
+  offset = receive_offset_data();
 }
 
-float receive_offset_data(){
+float receive_offset_data() {
   if (Serial1.available() >= 1) {
     input = Serial1.readStringUntil('\n');
-    float offset = input.toFloat();
+    offset = input.toFloat();
     return offset;
   }
-  return -1000.00;
+  return -10000.00; // This means there was a problem with the communication, and so, no message was sent, even if the camera have not seen the ball
 }
 
 void setup() {
