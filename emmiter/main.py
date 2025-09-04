@@ -29,7 +29,7 @@ def get_ball_blob(img, threshold, court_blob):
         for blob in blobs:
             ball = blob
             if ball.roundness() < 0.6 or ball.pixels() < 100: continue #REVISE
-            # if not is_blob_inside_blob(court_blob, ball): continue
+            if not is_blob_inside_blob(court_blob, ball): continue
             # print("Found blob with roundness: ", ball.roundness(), "pixels: ", ball.pixels())
             # print("------------------")
             return ball
