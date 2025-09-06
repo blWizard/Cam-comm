@@ -121,7 +121,7 @@ void stop_motors() {
   stop_mt4();
 }
 
-void move_left(int speed) {
+void move_right(int speed) {
   Serial.println("Moving left");
   move_fw_mt1(speed);
   move_bw_mt2(speed);
@@ -129,7 +129,7 @@ void move_left(int speed) {
   move_bw_mt4(speed);
 }
 
-void move_right(int speed) {
+void move_left(int speed) {
   Serial.println("Moving right");
   move_bw_mt1(speed);
   move_fw_mt2(speed);
