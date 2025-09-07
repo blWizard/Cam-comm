@@ -1,16 +1,16 @@
-int EN1 = 6;
+int EN1 = 6; // OK
 int forward_motor1 = 8;
 int backward_motor1 = 7;
 
-int EN2 = 5;
+int EN2 = 5; // OK
 int forward_motor2 = 2;
 int backward_motor2 = 4;
 
-int EN3 = 10;
-int forward_motor3 = A1;
-int backward_motor3 = A0;
+int EN3 = 10; // OK
+int forward_motor3 = A0;
+int backward_motor3 = A1;
 
-int EN4 = 9;
+int EN4 = 9; // OK
 int forward_motor4 = 12;
 int backward_motor4 = 11;
 
