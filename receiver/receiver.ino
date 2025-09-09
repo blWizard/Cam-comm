@@ -42,6 +42,6 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  offset, area = receive_offset_data();
+  offset = receive_offset_data();
   equilibrate_ball(offset);
 }
