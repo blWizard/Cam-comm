@@ -8,15 +8,14 @@ struct Ball{
 
 Ball ball;
 
-int min_ball_area = 350;
-int max_ball_area = 1000;
+int max_ball_area = 400;
 
 String input;
 float final_data;
 float offset;
 int ball_area;
 
-const int approaching_speed = 80;
+const int approaching_speed = 150;
 
 int centering_ball_speed = 0;
 
@@ -41,7 +40,7 @@ int calculate_speed(float offset) {
   return final_speed;
   }
 
-void equilibrate_ball(float offset) {
+void equilibrate_ball(float offset, int area) {
   if (offset == -1000.00) { // If theres "no ball"
     Serial.println("No ball");
     move_left(no_ball_speed);
@@ -59,21 +58,23 @@ void equilibrate_ball(float offset) {
     move_right(centering_ball_speed);
   }
   else if (offset == 0.00) {
-    move_left(centered_ball_speed);
+    // move_left(centered_ball_speed);
+    approach_ball(area);
   }
 }
 
 void approach_ball(int ball_area){
   if (ball_area > 0){
-    if (ball_area < min_ball_area) {
+    if (ball_area > max_ball_area) {
       move_forward(approaching_speed);
     }
-    else if (ball_area > max_ball_area) {
-      move_backward(approaching_speed);
-    }
-  }
+//    else if (ball_area > (max_ball_area + max_ball_area * 0.05)) { TODO: Definir qué hacer cuando ya nos acercamos a la pelota
+//      move_backward(approaching_speed);
+//    }
+//  }
   else if (ball_area == 0) {
     stop_motors();
+    }
   }
 }
 
@@ -117,12 +118,9 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-//  offset = receive_offset_data();
-//  equilibrate_ball(offset);
   ball = receive_ball_data();
-//  image_width = ball.width;
-//  offset = ball.offset;
-//  equilibrate_ball(offset);
+  image_width = ball.width;
+  offset = ball.offset;
   ball_area = ball.area;
-  approach_ball(ball_area);
+  equilibrate_ball(offset, ball_area);
 }
