@@ -121,6 +121,20 @@ void stop_motors() {
   stop_mt4();
 }
 
+void move_forward(int speed) {
+  move_fw_mt1(speed);
+  move_fw_mt2(speed);
+  move_fw_mt3(speed);
+  move_fw_mt4(speed);
+}
+
+void move_backward(int speed) {
+  move_bw_mt1(speed);
+  move_bw_mt2(speed);
+  move_bw_mt3(speed);
+  move_bw_mt4(speed);
+}
+
 void move_left(int speed) {
   Serial.println("Moving left");
   move_fw_mt1(speed);
