@@ -87,10 +87,10 @@ def find_court(img, thresh):
     return -1
 
 def find_ball(img, thresh, court_blob):
-    blob = get_ball_blob(img, thresh, court_blob)
-    ball_centre = get_blob_centre(img, blob)
+    ball_blob = get_ball_blob(img, thresh, court_blob)
+    ball_centre = get_blob_centre(img, ball_blob)
     if ball_centre != None:
-        return ball_centre
+        return ball_centre, ball_blob.area()
     return -1
 
 led.toggle()
@@ -101,20 +101,14 @@ while True:
     img = sensor.snapshot()
     court_blob = find_court(img, COURT_THRESH)
     if court_blob != -1:
-        ball_centre = find_ball(img, BALL_THRESH, court_blob)
+        ball_centre, ball_area = find_ball(img, BALL_THRESH, court_blob)
         if ball_centre != -1:
             offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
             # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
-            send_data(offset * -1)
+            data = str(offset * -1) + "," + str(img.width()) + "," + str(ball_area)
+            send_data(data)
             ball_led.toggle()
             # print("----------------------------------")
         else:
-            send_data(-1000) # Sends a value that means no ball detected
-    # ball_centre = find_ball(img, BALL_THRESH, court_blob)
-    # if ball_centre != -1:
-    #     offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
-    #     # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
-    #     ball_led.toggle()
-    #     send_data(offset) # Sends ball offset (centered, left disaligned, right disaligned)
-    # else:
-    #     send_data(-1000) # Sends a value that means no ball detected
+            data = str(-1000) + "," + str(0) + "," + str(0)
+            send_data(data) # Sends a value that means no ball detected
