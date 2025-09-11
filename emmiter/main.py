@@ -91,7 +91,7 @@ def find_ball(img, thresh, court_blob):
     ball_centre = get_blob_centre(img, ball_blob)
     if ball_centre != None:
         return ball_centre, ball_blob.area()
-    return -1
+    return -1, -1
 
 led.toggle()
 time.sleep(1)
@@ -102,7 +102,7 @@ while True:
     court_blob = find_court(img, COURT_THRESH)
     if court_blob != -1:
         ball_centre, ball_area = find_ball(img, BALL_THRESH, court_blob)
-        if ball_centre != -1:
+        if ball_centre != -1 and ball_area != -1:
             offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
             # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
             data = str(offset * -1) + "," + str(img.width()) + "," + str(ball_area)
