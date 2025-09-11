@@ -105,7 +105,8 @@ while True:
         if ball_centre != -1:
             offset = get_blob_offset(ball_centre[0], LEFT_THRESH, RIGHT_THRESH)
             # print("Image centre: ", IMG_W/2, "Ball blob X centre: ", ball_centre[0], "Ball centre offset: ", offset)
-            send_data(offset)
+            send_data(offset * -1)
+            ball_led.toggle()
             # print("----------------------------------")
         else:
             send_data(-1000) # Sends a value that means no ball detected
