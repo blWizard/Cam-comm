@@ -77,8 +77,8 @@ Ball receive_ball_data() {
     asign_ball_data(offset, width, area);
     return ball;
    }
-   asign_ball_data(-10000.00, -1, -1);
-   return ball;
+  asign_ball_data(-10000.00, -1, -1);
+  return ball;
   }
 
 void asign_ball_data(float offset, int width, int area){
@@ -96,6 +96,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  offset = receive_offset_data();
-  equilibrate_ball(offset);
+//  offset = receive_offset_data();
+//  equilibrate_ball(offset);
+  ball = receive_ball_data();
 }
