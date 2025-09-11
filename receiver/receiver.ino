@@ -8,11 +8,17 @@ struct Ball{
 
 Ball ball;
 
+int min_ball_area = 350;
+int max_ball_area = 1000;
+
 String input;
 float final_data;
 float offset;
+int ball_area;
 
-int centering_ball_speed = 70;
+const int approaching_speed = 80;
+
+int centering_ball_speed = 0;
 
 const int centered_ball_speed = 0;
 const int no_ball_speed = 0;
@@ -37,6 +43,7 @@ int calculate_speed(float offset) {
 
 void equilibrate_ball(float offset) {
   if (offset == -1000.00) { // If theres "no ball"
+    Serial.println("No ball");
     move_left(no_ball_speed);
   }
   else if (offset < 0.00 and offset != -10000.00) { // Double check condition so we do not confuse 'left' messages with 'I did not receive any data' (-10.000) info.
@@ -53,6 +60,20 @@ void equilibrate_ball(float offset) {
   }
   else if (offset == 0.00) {
     move_left(centered_ball_speed);
+  }
+}
+
+void approach_ball(int ball_area){
+  if (ball_area > 0){
+    if (ball_area < min_ball_area) {
+      move_forward(approaching_speed);
+    }
+    else if (ball_area > max_ball_area) {
+      move_backward(approaching_speed);
+    }
+  }
+  else if (ball_area == 0) {
+    stop_motors();
   }
 }
 
@@ -99,4 +120,9 @@ void loop() {
 //  offset = receive_offset_data();
 //  equilibrate_ball(offset);
   ball = receive_ball_data();
+//  image_width = ball.width;
+//  offset = ball.offset;
+//  equilibrate_ball(offset);
+  ball_area = ball.area;
+  approach_ball(ball_area);
 }
