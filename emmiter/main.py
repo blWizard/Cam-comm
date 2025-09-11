@@ -110,5 +110,5 @@ while True:
             ball_led.toggle()
             # print("----------------------------------")
         else:
-            data = str(-1000) + "," + str(0) + "," + str(0)
+            data = str(-1000) + "," + str(img.width()) + "," + str(0)
             send_data(data) # Sends a value that means no ball detected
